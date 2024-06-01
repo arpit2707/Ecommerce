@@ -1,0 +1,9 @@
+.prod-images{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+.sidebarimg{
+    height: 100px;
+    width: 100px;
+}
