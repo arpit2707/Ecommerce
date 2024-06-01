@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Routes, Switch, Navigate } from "react-router-dom";
 import About from "./components/About";
 import Banner from "./components/Banner";
@@ -12,10 +12,11 @@ import ContactUs from "./components/ContactUs";
 import Product from "./components/Product";
 import Login from "./components/Login";
 import LoginContextStore from "./utils/LoginContextStore";
+import LoginContext from "./utils/LoginContext";
 
 function Example() {
   const localToken = localStorage.getItem("token");
-
+  const loginCtx = useContext(LoginContext);
   return (
     <div>
       <LoginContextStore>
@@ -25,7 +26,7 @@ function Example() {
 
           <Routes>
             <Route path="/about" element={<About />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={!loginCtx.logins ? <Login /> : <Home />} />
             <Route
               path="/store"
               element={
@@ -37,7 +38,10 @@ function Example() {
               }
             />
             <Route path="/contactus" element={<ContactUs />} />
-            <Route path="/products/:id" element={<Product />} />
+            <Route
+              path="/products/:id"
+              element={!loginCtx.logins ? <Login /> : <Product />}
+            />
             <Route path="/login" element={<Login />} />
           </Routes>
 

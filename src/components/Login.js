@@ -40,6 +40,10 @@ const Login = () => {
           localStorage.setItem("token", data.idToken);
           localStorage.setItem("email", data.email);
           loginCtx.loginToken(data.idToken);
+          setTimeout(() => {
+            localStorage.clear();
+            navigate("/login");
+          }, 5000 * 5);
           navigate("/store");
         } else {
           throw new Error(data.error.message);
@@ -64,19 +68,21 @@ const Login = () => {
         });
 
         const data = await setCredentails.json();
-
+        console.log(data.error);
         if (setCredentails.ok) {
           console.log("login successful");
           console.log(data);
           localStorage.setItem("token", data.idToken);
           localStorage.setItem("email", data.email);
           loginCtx.loginToken(data.idToken);
+
           navigate("/store");
         } else {
+          console.log(data.error);
           throw new Error(data.error.message);
         }
       } catch (error) {
-        alert(error);
+        // alert(error);
       }
     }
   };
